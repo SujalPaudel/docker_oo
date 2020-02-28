@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  #python API
+  product-service:
+    build: ./FrontEnd
+    volumes:
+      - ./FrontEnd:/usr/src/app
+    ports:
+      - 5001:80
+    depends_on:
+      - database
+
+  website:
+    #PHP FrontEnd
+    image: php:7.0-apache
+    volumes:
+      - ./BackEnd:/var/www/html
+    ports:
+      - 5000:80
+    depends_on:
+      - product-service
+
